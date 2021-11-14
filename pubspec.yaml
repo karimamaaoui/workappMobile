@@ -34,8 +34,12 @@ dependencies:
   flutter_svg: ^0.19.1
   flutter_pw_validator: ^1.2.1
   shared_preferences:
+  json_annotation:
+  flutter_secure_storage: ^3.3.3
+
 
 dev_dependencies:
+  json_serializable:
   flutter_test:
     sdk: flutter
 

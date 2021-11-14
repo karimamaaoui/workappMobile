@@ -1,11 +1,15 @@
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
+import 'package:khedma/Screens/Home.dart';
 import 'package:khedma/Screens/Login/login_screen.dart';
 import 'package:khedma/Screens/Signup/components/background.dart';
 import 'package:khedma/Screens/Signup/components/or_divider.dart';
 import 'package:khedma/Screens/Signup/components/social_icon.dart';
+import 'package:khedma/Screens/Welcome/welcome_screen.dart';
+import 'package:khedma/Widget/progressDialog.dart';
 import 'package:khedma/components/already_have_an_account_acheck.dart';
 import 'package:khedma/components/rounded_button.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,10 +26,6 @@ Body({Key key, this.title}) : super(key: key);
 
 final String title;
 
-
-
-
-
 @override
 _BodyState createState() => _BodyState();
 }
@@ -34,20 +34,15 @@ class _BodyState extends State<Body> {
   String email= "",username= "",password = "";
 
   bool pass = false;
+  final storage = new FlutterSecureStorage();
 
   bool processing=false;
   var key = "null";
-  String encryptedS;
   TextEditingController controller = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
-
-
-
-
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -151,6 +146,7 @@ class _BodyState extends State<Body> {
 
 
                 }
+
               },
             ):CircularProgressIndicator(backgroundColor: Colors.red,),
             SizedBox(height: size.height * 0.03),
@@ -195,12 +191,14 @@ class _BodyState extends State<Body> {
 
     setState(() {
       processing=true;
+
     });
+
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    var Url = Uri.parse("http://192.168.1.2:8081/api/auth/signUp");
+    var Url = Uri.parse("http://192.168.1.11:8081/api/auth/signup");
     var data = {
-      "email":email,
       "username":username,
+      "email":email,
       "password": password,
     };
 
@@ -212,10 +210,12 @@ class _BodyState extends State<Body> {
           "password": password,
         }));
 
-    print(Url);
+      print(Url);
+      print("data $data");
+      jsonResponse = json.decode(res.body);
+      print("dddd $jsonResponse");
 
     if(jsonDecode(res.body) == "email exists"){
-      print('hahahaah');
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Username already Associated to existing account",
           style: TextStyle(
@@ -232,34 +232,14 @@ class _BodyState extends State<Body> {
 
     }
 
-    else{
-      if(jsonDecode(res.body) == "true"){
-        jsonResponse = json.decode(res.body);
-        print(jsonResponse);
-        sharedPreferences.setString("token", jsonResponse['token']);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Account created successfully",
-            style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 25.0,
-                fontWeight: FontWeight.w300,
-                color: Colors.white),
-          ),
-        ),
-        );
-        showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (BuildContext dialogContext) {
-            return MyAlertDialog(title: 'Backend Response', content: res.body);
-          },
-        );
 
 
-      }
       else{
         if(jsonDecode(res.body) == "username exists"){
           print('hahahaah');
+          Scaffold.of(context).showSnackBar(
+              SnackBar(content: Text("Netwok Error")));
+
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("Username already exists",
               style: TextStyle(
@@ -274,8 +254,45 @@ class _BodyState extends State<Body> {
             processing=false;
           });
 
-        }
-      }
+
+      }   else{
+          Map<String, dynamic> output =
+          json.decode(res.body);
+          print(output["token"]);
+          await storage.write(
+              key: "token", value: output["token"]);
+
+          Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(
+    builder: (context) => Home(),
+    ),
+    (route) => false);
+    print('token $jsonResponse["token"]');
+    sharedPreferences.setString("token", jsonResponse['token']);
+    print("hhhhhgg $sharedPreferences");
+    /* ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Account created successfully",
+            style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 25.0,
+                fontWeight: FontWeight.w300,
+                color: Colors.white),
+          ),
+        ),
+
+        );*/
+    /* Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       builder: (context) {
+                         return LoginScreen();
+                       },
+                     ));*/
+    //
+    //
+    //  Navigator.pushReplacement(ctx, MaterialPageRoute(builder: (context)=>WelcomeScreen()));
+    }
       setState(() {
         processing=false;
       });

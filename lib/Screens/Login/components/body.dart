@@ -1,8 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:khedma/Screens/Home.dart';
 import 'package:khedma/Screens/Login/components/background.dart';
 import 'package:khedma/Screens/Signup/signup_screen.dart';
+import 'package:khedma/Screens/Welcome/welcome_screen.dart';
 import 'package:khedma/components/already_have_an_account_acheck.dart';
 import 'package:khedma/components/rounded_button.dart';
 import 'package:khedma/components/rounded_input_field.dart';
@@ -29,6 +32,7 @@ class _BodyState extends State<Body> {
   String username = "",password = "";
   bool processing=false;
   TextEditingController controller = new TextEditingController();
+  final storage = new FlutterSecureStorage();
 
 
   @override
@@ -98,7 +102,7 @@ class _BodyState extends State<Body> {
     setState(() {
       processing=true;
     });
-    var Url = Uri.parse("http://192.168.1.2:8081/api/auth/signin");
+    var Url = Uri.parse("http://192.168.1.11:8081/api/auth/signin");
     var response = await http.post(Url,
         headers: <String, String>{"Content-Type": "application/json"},
         body: jsonEncode(<String, String>{
@@ -107,6 +111,8 @@ class _BodyState extends State<Body> {
         }));
 
     print(Url);
+    print(jsonDecode(response.body));
+
     if(jsonDecode(response.body)== "dont have an account"){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Create an account before logging in ",
@@ -151,6 +157,18 @@ class _BodyState extends State<Body> {
             return MyAlertDialog(title: 'Backend Response', content: response.body);
           },
         );
+        Map<String, dynamic> output =
+        json.decode(response.body);
+        print(output["accessToken"]);
+        await storage.write(
+            key: "token", value: output["accessToken"]);
+
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Home(),
+            ),
+                (route) => false);
 
       }
       setState(() {
