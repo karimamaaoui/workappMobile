@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khedma/Screens/LandingPage/landing_screen.dart';
 import 'package:khedma/Screens/Welcome/welcome_screen.dart';
 import 'package:khedma/constants.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: WelcomeScreen(),
+      home: LandingScreen(),
     );
   }
 }
