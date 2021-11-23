@@ -37,7 +37,7 @@ import 'package:khedma/constants.dart';
           Padding(
               padding: EdgeInsets.only(right: 20,top: 20),
               child:    RaisedButton(
-                color: Colors.yellow,
+                color: Colors.grey,
                 textColor: Colors.white,
                 child: Container(
                 child: Text('Skip',style: TextStyle(fontSize: 18,fontFamily: "Brand Bold"),),
