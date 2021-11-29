@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:khedma/Screens/LandingPage/landing_screen.dart';
 import 'package:khedma/Screens/Welcome/welcome_screen.dart';
 import 'package:khedma/constants.dart';
+import 'package:khedma/Screens/Profile/Steps.dart';
 
 void main() => runApp(MyApp());
 

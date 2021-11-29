@@ -3,13 +3,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
-import 'package:khedma/Screens/Home.dart';
 import 'package:khedma/Screens/Login/login_screen.dart';
 import 'package:khedma/Screens/Signup/components/background.dart';
 import 'package:khedma/Screens/Signup/components/or_divider.dart';
 import 'package:khedma/Screens/Signup/components/social_icon.dart';
 import 'package:khedma/Screens/Welcome/welcome_screen.dart';
-import 'package:khedma/Widget/progressDialog.dart';
+import 'package:khedma/Screens/home/home_screen.dart';
 import 'package:khedma/components/already_have_an_account_acheck.dart';
 import 'package:khedma/components/rounded_button.dart';
 import 'package:flutter_svg/svg.dart';
@@ -265,7 +264,7 @@ class _BodyState extends State<Body> {
           Navigator.pushAndRemoveUntil(
     context,
     MaterialPageRoute(
-    builder: (context) => Home(),
+    builder: (context) => HomeScreen(),
     ),
     (route) => false);
     print('token $jsonResponse["token"]');

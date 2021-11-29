@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  animations: ^1.0.0
   flutter:
     sdk: flutter
 
@@ -36,6 +37,12 @@ dependencies:
   shared_preferences:
   json_annotation:
   flutter_secure_storage: ^3.3.3
+  hexcolor: ^2.0.4
+  font_awesome_flutter: ^9.1.0
+  otp_text_field: ^1.1.1
+  flutter_screenutil: ^2.3.1
+  carousel_slider: ^2.2.1
+  stepper: ^0.0.2
 
 
 dev_dependencies:
@@ -56,6 +63,16 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/icons/airbnb_logo.svg
+    - assets/icons/apple_logo.svg
+    - assets/icons/chevron_left_icon.svg
+    - assets/icons/close_icon.svg
+    - assets/icons/google_logo.svg
+    - assets/icons/heart_icon.svg
+    - assets/icons/search.svg
+    - assets/icons/slider_icon.svg
+    - assets/images/avatar.png
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -73,17 +90,25 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
+  fonts:
+    - family: SF Pro Rounded
+      fonts:
+        - asset: assets/fonts/SF-Pro-Rounded-Thin.otf
+          weight: 100
+        - asset: assets/fonts/SF-Pro-Rounded-Bold.otf
+          weight: 600
+        - asset: assets/fonts/SF-Pro-Rounded-Heavy.otf
+          weight: 800
+    - family: SF Pro Text
+      fonts:
+        - asset: assets/fonts/SF-Pro-Text-Regular.otf
+        - asset: assets/fonts/SF-Pro-Text-Medium.otf
+          weight: 500
+        - asset: assets/fonts/SF-Pro-Text-Bold.otf
+          weight: 600
+        - asset: assets/fonts/SF-Pro-Text-Semibold.otf
+          weight: 600
+
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

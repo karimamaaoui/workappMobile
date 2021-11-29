@@ -82,7 +82,7 @@ import 'package:khedma/constants.dart';
       width: isActive ?30:8,
       margin: EdgeInsets.only(right: 50,left: 50,bottom: 50),
       decoration: BoxDecoration(
-          color: secoundry,
+          color: kSecondaryTextColor,
           borderRadius: BorderRadius.circular(5)
 
       )
@@ -129,7 +129,7 @@ Widget makePage({image , title,content, reverse=false}){
           ],
         ): SizedBox(),
         Text(title,style: TextStyle(
-          color:primary,
+          color:kSecondaryTextColor,
           fontSize: 30,
           fontWeight: FontWeight.bold
         ),),
@@ -137,7 +137,7 @@ Widget makePage({image , title,content, reverse=false}){
           height: 20,
         ),
         Text(content,textAlign:TextAlign.center,style: TextStyle(
-            color:primary,
+            color:kSecondaryTextColor,
 
             fontSize: 20,
             fontWeight: FontWeight.w400

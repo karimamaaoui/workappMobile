@@ -2,16 +2,17 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:khedma/Screens/Home.dart';
 import 'package:khedma/Screens/Login/components/background.dart';
 import 'package:khedma/Screens/Signup/signup_screen.dart';
 import 'package:khedma/Screens/Welcome/welcome_screen.dart';
+import 'package:khedma/Screens/home/home_screen.dart';
 import 'package:khedma/components/already_have_an_account_acheck.dart';
 import 'package:khedma/components/rounded_button.dart';
 import 'package:khedma/components/rounded_input_field.dart';
 import 'package:khedma/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
+import 'package:khedma/Screens/Profile/Steps.dart';
 
 
 
@@ -113,6 +114,7 @@ class _BodyState extends State<Body> {
     print(Url);
     print(jsonDecode(response.body));
 
+
     if(jsonDecode(response.body)== "dont have an account"){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Create an account before logging in ",
@@ -160,13 +162,23 @@ class _BodyState extends State<Body> {
         Map<String, dynamic> output =
         json.decode(response.body);
         print(output["accessToken"]);
+        print("eeeeeeeeeeee");
+        print(output["username"]);
+        String username =output["username"];
+        int idUser = (output["id"]);
+        print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+        print(idUser);
         await storage.write(
             key: "token", value: output["accessToken"]);
+        print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+        print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
+       String Token= await storage.read(key: "token");
+        print(Token);
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => Home(),
+              builder: (context) => HomeScreen(username:username,idUser:idUser),
             ),
                 (route) => false);
 
