@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:khedma/Screens/Profile/user.dart';
 import 'package:khedma/common/theme_helper.dart';
 
 
@@ -38,8 +39,8 @@ class StepsScreen extends StatefulWidget {
 }
 
 class _StepsScreen extends State<StepsScreen> {
+  final User user=new User(null,null,null,null,null,null,null,null,null,null,null,null);
   final _formKey = GlobalKey<FormState>();
-
   bool checkedValue = false;
   bool checkboxValue = false;
   final _formKey2 = GlobalKey<FormState>();
@@ -47,11 +48,19 @@ class _StepsScreen extends State<StepsScreen> {
   bool checkboxValue2 = false;
   final _formKey3 = GlobalKey<FormState>();
   int _activeStepIndex = 0;
-  TextEditingController name = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController pass = TextEditingController();
-  TextEditingController address = TextEditingController();
-  TextEditingController pincode = TextEditingController();
+  TextEditingController FirstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
+  TextEditingController jobTypeController = TextEditingController();
+  TextEditingController qualificationController = TextEditingController();
+  TextEditingController issuedByController = TextEditingController();
+  TextEditingController yearOfPassingController = TextEditingController();
+  TextEditingController skillController = TextEditingController();
+  TextEditingController jobApplyForController = TextEditingController();
+  TextEditingController workExperienceController = TextEditingController();
+  TextEditingController expectedSalaryController = TextEditingController();
+
 
   _StepsScreen();
  List<Step> stepList() => [
@@ -96,13 +105,17 @@ class _StepsScreen extends State<StepsScreen> {
             Container(
               child: TextFormField(
                 decoration: ThemeHelper().textInputDecoration('First Name', 'Enter your first name'),
+                controller: FirstNameController,
               ),
               decoration: ThemeHelper().inputBoxDecorationShaddow(),
+
             ),
             SizedBox(height: 30,),
             Container(
               child: TextFormField(
                 decoration: ThemeHelper().textInputDecoration('Last Name', 'Enter your first name'),
+                controller: lastNameController,
+
               ),
               decoration: ThemeHelper().inputBoxDecorationShaddow(),
             ),
@@ -112,6 +125,7 @@ class _StepsScreen extends State<StepsScreen> {
               child: TextFormField(
                 decoration: ThemeHelper().textInputDecoration(
                     "Phone", "Enter your phone number"),
+                controller: phoneController,
                 validator: (val) {
                   if (val.isEmpty) {
                     return "Please enter your phone number";
@@ -125,6 +139,7 @@ class _StepsScreen extends State<StepsScreen> {
             Container(
               child: TextFormField(
                 decoration: ThemeHelper().textInputDecoration('Gender', 'Enter your first name'),
+                controller: genderController,
               ),
               decoration: ThemeHelper().inputBoxDecorationShaddow(),
             ),
@@ -198,6 +213,8 @@ class _StepsScreen extends State<StepsScreen> {
               Container(
                 child: TextFormField(
                   decoration: ThemeHelper().textInputDecoration('Job type', 'Enter your job type'),
+                  controller: jobApplyForController,
+
                 ),
                 decoration: ThemeHelper().inputBoxDecorationShaddow(),
               ),
@@ -206,6 +223,7 @@ class _StepsScreen extends State<StepsScreen> {
               Container(
                 child: TextFormField(
                   decoration: ThemeHelper().textInputDecoration('Qualification', 'Enter your Qualification'),
+                  controller: qualificationController
                 ),
                 decoration: ThemeHelper().inputBoxDecorationShaddow(),
               ),
@@ -213,6 +231,7 @@ class _StepsScreen extends State<StepsScreen> {
               Container(
                 child: TextFormField(
                   decoration: ThemeHelper().textInputDecoration('Issued by college', 'Enter your College name'),
+                  controller: issuedByController
                 ),
                 decoration: ThemeHelper().inputBoxDecorationShaddow(),
               ),
@@ -220,6 +239,7 @@ class _StepsScreen extends State<StepsScreen> {
               Container(
                 child: TextFormField(
                   decoration: ThemeHelper().textInputDecoration('Year of passing', 'Enter your year of passing'),
+                  controller: yearOfPassingController
                 ),
                 decoration: ThemeHelper().inputBoxDecorationShaddow(),
               ),
@@ -291,6 +311,7 @@ class _StepsScreen extends State<StepsScreen> {
             Container(
               child: TextFormField(
                 decoration: ThemeHelper().textInputDecoration('Skill', 'Enter your Skills'),
+                controller: skillController,
               ),
               decoration: ThemeHelper().inputBoxDecorationShaddow(),
             ),
@@ -299,6 +320,7 @@ class _StepsScreen extends State<StepsScreen> {
             Container(
               child: TextFormField(
                 decoration: ThemeHelper().textInputDecoration("Job apply for", "Enter your preferred job"),
+                controller: jobApplyForController,
                 keyboardType: TextInputType.emailAddress,
                 validator: (val) {
                   if(!(val.isEmpty) && !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$").hasMatch(val)){
@@ -315,6 +337,7 @@ class _StepsScreen extends State<StepsScreen> {
                 decoration: ThemeHelper().textInputDecoration(
                     "Work Experience",
                     "Enter your Work Experience"),
+                controller: workExperienceController,
                 keyboardType: TextInputType.phone,
                 validator: (val) {
                   if(!(val.isEmpty) && !RegExp(r"^(\d+)*$").hasMatch(val)){
@@ -329,6 +352,7 @@ class _StepsScreen extends State<StepsScreen> {
             Container(
               child: TextFormField(
                 obscureText: true,
+                controller: expectedSalaryController,
                 decoration: ThemeHelper().textInputDecoration(
                     "Expected Salary", "Enter your expected salary"),
                 validator: (val) {
@@ -377,13 +401,23 @@ class _StepsScreen extends State<StepsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('Name: ${name.text}'),
-                Text('Email: ${email.text}'),
-                const Text('Password: *****'),
-                Text('Address : ${address.text}'),
-                Text('PinCode : ${pincode.text}'),
+                Text('FirstName: ${FirstNameController.text}'),
+                Text('LastName: ${lastNameController.text}'),
+                Text('Phone: ${phoneController.text}'),
+                Text('Gender : ${genderController.text}'),
+                Text('Job Type : ${jobTypeController.text}'),
+                Text('Qualification : ${qualificationController.text}'),
+                Text('Issued By College : ${issuedByController.text}'),
+                Text('Year Of Passing : ${yearOfPassingController.text}'),
+                Text('Skill : ${skillController.text}'),
+                Text('Job Apply For : ${jobTypeController.text}'),
+                Text('Work Experience : ${workExperienceController.text}'),
+                Text('Expected Salary : ${expectedSalaryController.text}'),
+                Text("eeeee ff")
+
               ],
-            )))
+            ))),
+
   ];
   @override
   Widget build(BuildContext context) {

@@ -1,203 +1,169 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:khedma/common/theme_helper.dart';
 import 'package:khedma/widgets/header_widget.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
-import '../Signup/signup_screen.dart';
+class ProfileInformation extends  StatelessWidget{
+
+  final int idUser;
+  final String username;
+  const ProfileInformation({
+    Key key,
+    @required this.idUser,
+    @required this.username,
 
 
+  }) : super(key: key);
 
-class RegistrationPage extends  StatefulWidget{
-  @override
-  State<StatefulWidget> createState() {
-    return _RegistrationPageState();
-  }
-}
 
-class _RegistrationPageState extends State<RegistrationPage>{
-
-  final _formKey = GlobalKey<FormState>();
-  bool checkedValue = false;
-  bool checkboxValue = false;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Container(
-              height: 150,
-              child: HeaderWidget(150, false, Icons.where_to_vote_outlined),
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.white,
+                Color.fromRGBO(39, 105, 171, 1),
+              ],
+              begin: FractionalOffset.bottomCenter,
+              end: FractionalOffset.topCenter,
             ),
-            Container(
-              margin: EdgeInsets.fromLTRB(25, 50, 25, 10),
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              alignment: Alignment.center,
+          ),
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 73),
               child: Column(
                 children: [
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          child: Stack(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(10),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'My Profile',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 34,
+                      fontFamily: 'Nisebuschgardens',
+                    ),
+                  ),
+                  SizedBox(
+                    height: 22,
+                  ),
+                  Container(
+                    height: height * 0.30,
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        double innerHeight = constraints.maxHeight;
+                        double innerWidth = constraints.maxWidth;
+                        return Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Positioned(
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                height: innerHeight * 0.32,
+                                width: innerWidth,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  border: Border.all(
-                                      width: 5, color: Colors.white),
+                                  borderRadius: BorderRadius.circular(30),
                                   color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black12,
-                                      blurRadius: 20,
-                                      offset: const Offset(5, 5),
+                                ),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text(
+                                      '$username',
+                                      style: TextStyle(
+                                        color: Color.fromRGBO(39, 105, 171, 1),
+                                        fontFamily: 'Nunito',
+                                        fontSize: 37,
+                                      ),
                                     ),
                                   ],
                                 ),
-                                child: SvgPicture.asset(
-                                  "assets/icons/login.svg",
-                                  height: size.height * 0.25,
-                                ),
                               ),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(80, 80, 0, 0),
-                                child: Icon(
-                                  Icons.add_circle,
-                                  color: Colors.grey.shade700,
-                                  size: 25.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 30,),
-                        Container(
-                          child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration('Full Name', 'Enter your first name'),
-                          ),
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                        ),
-
-                        SizedBox(height: 20.0),
-                        Container(
-                          child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration("E-mail address", "Enter your email"),
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (val) {
-                              if(!(val.isEmpty) && !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$").hasMatch(val)){
-                                return "Enter a valid email address";
-                              }
-                              return null;
-                            },
-                          ),
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                        ),
-                        SizedBox(height: 20.0),
-                        Container(
-                          child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration(
-                                "Date de naissance",
-                                "Enter your mobile number"),
-                            keyboardType: TextInputType.phone,
-                            validator: (val) {
-                              if(!(val.isEmpty) && !RegExp(r"^(\d+)*$").hasMatch(val)){
-                                return "Enter a valid phone number";
-                              }
-                              return null;
-                            },
-                          ),
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                        ),
-                        SizedBox(height: 20.0),
-                        Container(
-                          child: TextFormField(
-                            obscureText: true,
-                            decoration: ThemeHelper().textInputDecoration(
-                                "Mobile", "Enter your password"),
-                            validator: (val) {
-                              if (val.isEmpty) {
-                                return "Please enter your password";
-                              }
-                              return null;
-                            },
-                          ),
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                        ),
-                        SizedBox(height: 20.0),
-                        Container(
-                          child: TextFormField(
-                            obscureText: true,
-                            decoration: ThemeHelper().textInputDecoration(
-                                "Adress", "Enter your password"),
-                            validator: (val) {
-                              if (val.isEmpty) {
-                                return "Please enter your password";
-                              }
-                              return null;
-                            },
-                          ),
-
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                        ),
-                        SizedBox(height: 20.0),
-                        Container(
-                          child: TextFormField(
-                            obscureText: true,
-                            decoration: ThemeHelper().textInputDecoration(
-                                "Profession", "Enter your password"),
-                            validator: (val) {
-                              if (val.isEmpty) {
-                                return "Please enter your password";
-                              }
-                              return null;
-                            },
-                          ),
-
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
-                        ),
-                        SizedBox(height: 15.0),
-                        FormField<bool>(
-                          builder: (state) {
-                            return Column(
-                              children: <Widget>[
-
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    state.errorText ?? '',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(color: Theme.of(context).errorColor,fontSize: 12,),
+                            ),
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              child: Center(
+                                child: Container(
+                                  child: Image.asset(
+                                    'assets/images/avatar7.png',
+                                    width: innerWidth * 0.26,
+                                    fit: BoxFit.fitWidth,
                                   ),
-                                )
-                              ],
-                            );
-                          },
-
-                        ),
-                        SizedBox(height: 20.0),
-
-                        SizedBox(height: 30.0),
-
-
-                      ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    height: height * 0.5,
+                    width: width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.white,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'My Informations',
+                            style: TextStyle(
+                              color: Color.fromRGBO(39, 105, 171, 1),
+                              fontSize: 27,
+                              fontFamily: 'Nunito',
+                            ),
+                          ),
+                          Divider(
+                            thickness: 2.5,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            height: height * 0.15,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        )
+      ],
     );
   }
-
 }

@@ -59,3 +59,9 @@ final kCaptionTextStyle = TextStyle(
 
 const kPrimaryColor = Color(0xFF383338);
 const kPrimaryLightColor = Color(0xFFC7C4C4);
+
+const kDarkPrimaryColor = Color(0xFF212121);
+const kDarkSecondaryColor = Color(0xFF373737);
+const kLightPrimaryColor = Color(0xFFFFFFFF);
+const kLightSecondaryColor = Color(0xFFF3F7FB);
+

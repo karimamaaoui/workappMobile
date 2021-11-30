@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:khedma/Screens/Profile/ProfileScreen.dart';
 import 'package:khedma/Screens/Profile/Steps.dart';
 import 'package:khedma/constants.dart';
 import 'package:khedma/widgets/search_control.dart';
@@ -7,9 +8,12 @@ import 'package:khedma/widgets/search_tag.dart';
 
 class HomeSubHeader extends StatelessWidget {
   final int idUser;
+  final String username;
+
   const HomeSubHeader({
     Key key,
     @required this.idUser,
+    @required this.username,
 
 
   }) : super(key: key);
@@ -70,7 +74,7 @@ class HomeSubHeader extends StatelessWidget {
             onTap: () {
               print("click");
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>StepScreen(idUser:idUser)));
+                  builder: (context) =>ProfileScreen(idUser: idUser,username: username,)));
 
             }, // handle your image tap here
                 child:

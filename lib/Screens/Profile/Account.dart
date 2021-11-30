@@ -3,11 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:khedma/Screens/Profile/Profile_information.dart';
 
 import '../Signup/signup_screen.dart';
-
-
-
-
-
 class SettingsUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -179,7 +174,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         RaisedButton(
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => RegistrationPage()
+                                builder: (context) => ProfileInformation()
                             ));
                           },
                           color: Colors.green,

@@ -43,6 +43,10 @@ dependencies:
   flutter_screenutil: ^2.3.1
   carousel_slider: ^2.2.1
   stepper: ^0.0.2
+  line_awesome_flutter: ^2.0.0
+  animated_theme_switcher: ^2.0.5
+  flutter_vector_icons: ^1.0.0
+
 
 
 dev_dependencies:
@@ -102,10 +106,11 @@ flutter:
     - family: SF Pro Text
       fonts:
         - asset: assets/fonts/SF-Pro-Text-Regular.otf
+          weight: 400
         - asset: assets/fonts/SF-Pro-Text-Medium.otf
           weight: 500
         - asset: assets/fonts/SF-Pro-Text-Bold.otf
-          weight: 600
+          weight: 700
         - asset: assets/fonts/SF-Pro-Text-Semibold.otf
           weight: 600
 

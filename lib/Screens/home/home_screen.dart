@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: kSpacingUnit * 6),
             HomeHeader(username:username),
             SizedBox(height: kSpacingUnit * 3),
-            HomeSubHeader(idUser:idUser),
+            HomeSubHeader(idUser:idUser,username:username),
             SizedBox(height: kSpacingUnit * 3),
             HomeContent(),
           ],
