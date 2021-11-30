@@ -2,7 +2,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:khedma/Screens/LandingPage/components/background.dart';
+import 'package:khedma/Screens/NoConnectionInternet.dart';
+import 'package:khedma/Screens/connectivity_provider.dart';
 import 'package:khedma/constants.dart';
+import 'package:provider/provider.dart';
 
   class Body extends StatefulWidget {
   @override
@@ -29,50 +32,9 @@ import 'package:khedma/constants.dart';
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: <Widget>[
-      PageView(
-        onPageChanged: (int page){
-          setState(() {
-          currentIndex=page;
-          });
-        },
-        controller: _pageController,
-        children: [
-          makePage(
-            image: 'assets/images/logo.png',
-            title: 'Dream Job',
-            content: 'There are all kinds of equiments to found your dream job'
-          ),
-          makePage(
-            //  reverse: true,
-              image: 'assets/images/image.gif',
-              title: 'Dream Job 2 ',
-              content: 'There are all kinds of equiments to found your dream job'
-          ),
-          makePage(
-              image: 'assets/images/Layer.svg.png',
-              title: 'Dream Job 3 ',
-              content: 'There are all kinds of equiments to found your dream job'
-          )
-
-
-        ]
-          ),
-      Container(
-      margin:EdgeInsets.only(bottom: 40),
-
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:
-            buildIndicator(),
-        ),
-      )
-      ],
-
-
-      );
+    return Container(
+      child:pageUi() ,
+    );
   }
 
   Widget _indicator( bool isActive){
@@ -104,7 +66,70 @@ import 'package:khedma/constants.dart';
     }
     return indicators;
   }
-}
+  Widget pageUi (){
+    return Consumer<ConnectivityProvider> (
+      builder: (context,model,child){
+        if(model.isOnline!=null)
+        {
+          return model.isOnline ? Stack(
+            alignment: Alignment.bottomCenter,
+            children: <Widget>[
+              PageView(
+                  onPageChanged: (int page){
+                    setState(() {
+                      currentIndex=page;
+                    });
+                  },
+                  controller: _pageController,
+                  children: [
+                    makePage(
+                        image: 'assets/images/logo.png',
+                        title: 'Dream Job',
+                        content: 'There are all kinds of equiments to found your dream job'
+                    ),
+                    makePage(
+                      //  reverse: true,
+                        image: 'assets/images/image.gif',
+                        title: 'Dream Job 2 ',
+                        content: 'There are all kinds of equiments to found your dream job'
+                    ),
+                    makePage(
+                        image: 'assets/images/Layer.svg.png',
+                        title: 'Dream Job 3 ',
+                        content: 'There are all kinds of equiments to found your dream job'
+                    )
+
+
+                  ]
+              ),
+              Container(
+                margin:EdgeInsets.only(bottom: 40),
+
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:
+                  buildIndicator(),
+                ),
+              )
+            ],
+
+
+
+
+          ) :NoInternet();
+
+        }
+        return Container(
+          child: Center(
+            child :CircularProgressIndicator(),
+          )
+
+        );
+      },
+    );
+  }
+
+  }
 
 Widget makePage({image , title,content, reverse=false}){
   return Container(
@@ -147,3 +172,4 @@ Widget makePage({image , title,content, reverse=false}){
     ),
   );
 }
+

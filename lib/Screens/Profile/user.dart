@@ -1,4 +1,6 @@
 class User {
+
+
  String firstName ;
   String lastName;
   int phone;
@@ -14,7 +16,8 @@ class User {
  String workExperience;
  int  expectedSalary;
 
- User(
+ User( {
+
      this.firstName,
      this.lastName,
      this.phone,
@@ -29,6 +32,46 @@ class User {
      this.jobApplyFor,
      this.workExperience,
      this.expectedSalary,
-     );
+ });
 
+ factory User.fromJson(Map<String, dynamic> json) {
+  return User(
+   firstName: json['firstName'],
+   lastName: json['lastName'],
+   phone: json['phone'],
+   gender: json['gender'],
+
+   hightDegres: json['hightDegres'],
+   issuedBy: json['issuedBy'],
+   yearOfPassing: json['yearOfPassing'],
+   jobType: json['jobType'],
+
+
+   skill: json['skill'],
+   jobApplyFor: json['jobApplyFor'],
+   workExperience: json['workExperience'],
+   expectedSalary: json['expectedSalary'],
+
+  );
+ }
 }
+
+
+class OneUser {
+
+ int id;
+ String username;
+ String email;
+
+ OneUser({this.id,this.username,this.email});
+ factory OneUser.fromJson(Map<String, dynamic> json) {
+  return OneUser(
+   id: json['id'],
+   username: json['username'],
+   email: json['email'],
+
+  );
+ }
+}
+
+

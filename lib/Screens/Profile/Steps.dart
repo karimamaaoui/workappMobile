@@ -39,7 +39,6 @@ class StepsScreen extends StatefulWidget {
 }
 
 class _StepsScreen extends State<StepsScreen> {
-  final User user=new User(null,null,null,null,null,null,null,null,null,null,null,null);
   final _formKey = GlobalKey<FormState>();
   bool checkedValue = false;
   bool checkboxValue = false;

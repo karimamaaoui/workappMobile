@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
     @required this.idUser,
 
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, height: 896, width: 414, allowFontScaling: true);

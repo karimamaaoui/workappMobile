@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:khedma/Screens/Login/components/background.dart';
+import 'package:khedma/Screens/NoConnectionInternet.dart';
 import 'package:khedma/Screens/Signup/signup_screen.dart';
 import 'package:khedma/Screens/Welcome/welcome_screen.dart';
+import 'package:khedma/Screens/connectivity_provider.dart';
 import 'package:khedma/Screens/home/home_screen.dart';
 import 'package:khedma/components/already_have_an_account_acheck.dart';
 import 'package:khedma/components/rounded_button.dart';
@@ -13,6 +15,7 @@ import 'package:khedma/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:khedma/Screens/Profile/Steps.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -35,70 +38,96 @@ class _BodyState extends State<Body> {
   TextEditingController controller = new TextEditingController();
   final storage = new FlutterSecureStorage();
 
+  void initState(){
+    super.initState();
+    Provider.of<ConnectivityProvider>(context , listen:false).startMonitoring();
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    return pageUi();
+  }
+  Widget pageUi (){
     Size size = MediaQuery.of(context).size;
-    return Background(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "LOGIN",
-              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),
-            ),
-            SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
-              "assets/icons/login.svg",
-              height: size.height * 0.35,
-            ),
-            SizedBox(height: size.height * 0.03),
-            RoundedInputField(
+
+    return Consumer<ConnectivityProvider> (
+      builder: (context,model,child){
+        if(model.isOnline!=null)
+        {
+          return model.isOnline ? Background(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "LOGIN",
+                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),
+                  ),
+                  SizedBox(height: size.height * 0.03),
+                  SvgPicture.asset(
+                    "assets/icons/login.svg",
+                    height: size.height * 0.35,
+                  ),
+                  SizedBox(height: size.height * 0.03),
+                  RoundedInputField(
 
 
-              hintText: "Your Username",
-              onChanged: (value) {
-                username=value;
-              },
-            ),
-
-
-
-            RoundedPasswordField(
-              onChanged: (value) {
-                password=value;
-              },
-            ),
-            processing == false? RoundedButton(
-              text: "LOGIN",
-
-              press: () {
-                bool res = checkusername();
-                if(res){
-                  userSignIn();
-                }
-
-              },
-            ):CircularProgressIndicator(backgroundColor: Colors.red),
-            SizedBox(height: size.height * 0.03),
-            AlreadyHaveAnAccountCheck(
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return SignUpScreen();
+                    hintText: "Your Username",
+                    onChanged: (value) {
+                      username=value;
                     },
                   ),
-                );
-              },
+
+
+
+                  RoundedPasswordField(
+                    onChanged: (value) {
+                      password=value;
+                    },
+                  ),
+                  processing == false? RoundedButton(
+                    text: "LOGIN",
+
+                    press: () {
+                      bool res = checkusername();
+                      if(res){
+                        userSignIn();
+                      }
+
+                    },
+                  ):CircularProgressIndicator(backgroundColor: Colors.red),
+                  SizedBox(height: size.height * 0.03),
+                  AlreadyHaveAnAccountCheck(
+                    press: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return SignUpScreen();
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
+          ) :NoInternet();
+
+        }
+        return Container(
+            child: Center(
+              child :CircularProgressIndicator(),
+            )
+
+        );
+      },
     );
   }
+
+
   void userSignIn() async{
     setState(() {
       processing=true;

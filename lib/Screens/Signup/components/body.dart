@@ -264,7 +264,7 @@ class _BodyState extends State<Body> {
           Navigator.pushAndRemoveUntil(
     context,
     MaterialPageRoute(
-    builder: (context) => HomeScreen(),
+    builder: (context) => LoginScreen(),
     ),
     (route) => false);
     print('token $jsonResponse["token"]');

@@ -1,9 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:khedma/Screens/LandingPage/components/body.dart';
+import 'package:khedma/Screens/NoConnectionInternet.dart';
 import 'package:khedma/Screens/Welcome/welcome_screen.dart';
+import 'package:khedma/Screens/connectivity_provider.dart';
 import 'package:khedma/components/rounded_button.dart';
 import 'package:khedma/constants.dart';
+import 'package:provider/provider.dart';
 
   class LandingScreen extends StatefulWidget {
   @override
@@ -18,6 +21,8 @@ import 'package:khedma/constants.dart';
   initialPage: 0
   );
   super.initState();
+  Provider.of<ConnectivityProvider>(context , listen:false).startMonitoring();
+
   }
 
   @override
@@ -50,11 +55,13 @@ import 'package:khedma/constants.dart';
                 return WelcomeScreen();
                 })
                 );})
-          )],
+          )
+        ],
 
       ),
       body: Body(),
 
     );
   }
+
 }

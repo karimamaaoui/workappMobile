@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:khedma/Screens/Profile/ProfileScreen.dart';
 import 'package:khedma/Screens/Profile/Steps.dart';
+import 'package:khedma/Screens/Profile/user.dart';
 import 'package:khedma/constants.dart';
 import 'package:khedma/widgets/search_control.dart';
 import 'package:khedma/widgets/search_tag.dart';
+import 'package:http/http.dart' as http;
 
 class HomeSubHeader extends StatelessWidget {
   final int idUser;
@@ -73,8 +78,7 @@ class HomeSubHeader extends StatelessWidget {
               GestureDetector(
             onTap: () {
               print("click");
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>ProfileScreen(idUser: idUser,username: username,)));
+              getProfile(context);
 
             }, // handle your image tap here
                 child:
@@ -90,4 +94,50 @@ class HomeSubHeader extends StatelessWidget {
       ),
     );
   }
-}
+
+  Future<List<OneUser>> getProfile(BuildContext context) async
+  {
+    var Url = Uri.parse("http://192.168.1.11:8081/api/users/${this.idUser}");
+    final storage = new FlutterSecureStorage();
+
+    String headers= await storage.read(key: "token");
+    print("token in home page $headers");
+
+    Map<String, String> getHeaders = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': await storage.read(key: "token")
+    };
+    var response = await http.get(Url, headers:getHeaders);
+    print("repossonnne");
+
+    if (response.statusCode != 200) {
+      throw Exception(
+          "Request to $Url failed with status ${response.statusCode}: ${response.body}");
+    }
+
+    else{
+
+      var responseData = json.decode(response.body);
+      List<OneUser> users = [];
+      for (var singleUser in responseData) {
+        OneUser user = OneUser(id: singleUser["id"],
+          username: singleUser["username"],email: singleUser["email"],
+        );
+
+        users.add(user);
+      }
+      print("users sdddddddddddddddddddddddddddddddd $users");
+      print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+      print(response.body);
+
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>ProfileScreen(idUser: idUser,username: username,users:users)));
+
+      return users;
+
+    }
+
+  }
+
+  }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:khedma/Screens/Profile/Steps.dart';
+import 'package:khedma/Screens/Profile/user.dart';
 import 'package:khedma/constants.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
@@ -10,10 +11,12 @@ import 'Profile_information.dart';
 class ProfileScreen extends StatelessWidget {
   final int idUser;
   final String username;
+  final List<OneUser> users ;
   const ProfileScreen({
     Key key,
     @required this.idUser,
     @required this.username,
+    @required this.users
 
 
   }) : super(key: key);
@@ -74,7 +77,7 @@ class ProfileScreen extends StatelessWidget {
           SizedBox(height: kSpacingUnit.w *2),
           Text("Name :$username"),
           SizedBox(height: kSpacingUnit.w *0.5),
-          Text("Email :"),
+          Text("Email $users:"),
           SizedBox(height: kSpacingUnit.w *2),
           Container(
               height: kSpacingUnit.w * 4,
